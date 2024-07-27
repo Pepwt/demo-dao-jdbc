@@ -1,0 +1,84 @@
+# Acesso a banco de dados com JDBC
+
+## Visão Geral
+
+Este projeto demonstra como realizar operações de CRUD (Criar, Ler, Atualizar e Deletar) em um banco de dados MySQL utilizando JDBC em Java. Ele inclui exemplos de gerenciamento de vendedores e departamentos, destacando a estrutura de DAO (Data Access Object) para separação das preocupações de acesso a dados.
+
+## Funcionalidades
+
+- Conexão ao banco de dados MySQL utilizando JDBC.
+- Implementação de operações CRUD para entidades `Seller` e `Department`.
+- Utilização de padrões de projeto como DAO e Factory.
+
+## Estrutura do Projeto
+
+- `application`: Contém a classe principal `Program` para execução dos testes das operações CRUD.
+- `db`: Contém classes relacionadas à conexão com o banco de dados e tratamento de exceções.
+- `model.dao`: Contém interfaces DAO e uma fábrica para instanciar os DAOs.
+- `model.dao.impl`: Implementações das interfaces DAO usando JDBC.
+- `model.entities`: Contém as classes de entidade `Seller` e `Department`.
+
+## Requisitos
+
+- JDK 8 ou superior.
+- MySQL Server.
+- Biblioteca JDBC para MySQL.
+
+## Configuração
+
+1. Clone o repositório:
+    
+    git clone https://github.com/seuusuario/database-access-jdbc.git
+    
+2. Navegue até o diretório do projeto:
+    
+    cd database-access-jdbc
+    
+3. Configure o banco de dados:
+    - Crie um banco de dados MySQL.
+    - Execute o script SQL fornecido para criar as tabelas necessárias.
+    - Atualize o arquivo `db.properties` com as informações de conexão do seu banco de dados.
+
+4. Compile e execute o projeto:
+    - Compile o projeto com o seu ambiente de desenvolvimento Java preferido (por exemplo, Eclipse, IntelliJ, VSCode).
+    - Execute a classe `application.Program` para testar as funcionalidades de acesso ao banco de dados.
+
+## Exemplos de Uso
+
+### 1. Encontrar um vendedor por ID
+
+Seller seller = sellerDao.findById(3);
+System.out.println(seller);
+
+### 2. Encontrar vendedores por departamento
+
+Department department = new Department(2, null);
+List<Seller> list = sellerDao.findByDepartment(department);
+for(Seller obj : list) {
+    System.out.println(obj);
+}
+
+### 3. Inserir um novo vendedor
+
+Seller newSeller = new Seller(null, "Pierre", "pie@gmail.com", new Date(), 4000.0, department);
+sellerDao.insert(newSeller);
+System.out.println("Inserted! New id = " + newSeller.getId());
+
+### 4. Atualizar um vendedor existente
+
+Seller seller = sellerDao.findById(1);
+seller.setName("Julia Rose");
+sellerDao.update(seller);
+System.out.println("Update completed");
+
+### 5. Deletar um vendedor
+
+System.out.print("Enter id for delete test: ");
+int id = saida.nextInt();
+sellerDao.deleteById(id);
+System.out.println("Delete completed");
+
+
+### Explicação
+
+Esse README fornece uma visão geral do projeto, explica como configurá-lo e executá-lo, e inclui exemplos de uso para facilitar o entendimento do funcionamento das operações CRUD com JDBC.
